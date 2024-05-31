@@ -1,0 +1,7 @@
+task downloadSoundClassificationModelFile(type: Download) {
+    src 'https://tfhub.dev/google/lite-model/yamnet/classification/tflite/1?lite-format=tflite'
+    dest project.ext.ASSET_DIR + '/yamnet.tflite'
+    overwrite false
+}
+
+preBuild.dependsOn downloadSoundClassificationModelFile
