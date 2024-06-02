@@ -1,8 +1,10 @@
 package org.tensorflow.lite.examples.soundclassifier
 
+import android.R
 import android.animation.ObjectAnimator
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ internal class ProbabilitiesAdapter : RecyclerView.Adapter<ProbabilitiesAdapter.
     val binding =
       ItemProbabilityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     return ViewHolder(binding)
+
   }
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -1,7 +1,7 @@
 package org.tensorflow.lite.examples.soundclassifier
 
 import android.Manifest
-import android.R
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioRecord
 import android.os.Build
@@ -11,7 +11,6 @@ import android.os.HandlerThread
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -27,19 +26,31 @@ class MainActivity : AppCompatActivity() {
   private var classificationInterval = 500L // как часто классификация будет срабатывать
   private lateinit var handler: Handler
 
+  class BirdDetailsActivity {
+
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+
+
     val binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
 
     with(binding) {
       recyclerView.apply {
         setHasFixedSize(false)
         adapter = probabilitiesAdapter
       }
+      val openBirdDetailsButton = findViewById<Button>(R.id.secondbutton) // Replace with your button ID
+      openBirdDetailsButton.setOnClickListener {
+        val intent = Intent(this@MainActivity, BirdEncyclopedia::class.java)
+        startActivity(intent)
+      }
 
-      var isRecording = false
+      var isRecording = true
       class StatusHolder(var status: Boolean)
       // Создать кнопку
      // Обработать нажатия кнопки
@@ -61,6 +72,7 @@ class MainActivity : AppCompatActivity() {
           val statusHolder = StatusHolder(false)
                   }
       }
+
 
       // Ползунок который отображает как часто срабатывает классификация
       classificationIntervalSlider.value = classificationInterval.toFloat()
@@ -88,6 +100,7 @@ class MainActivity : AppCompatActivity() {
       startAudioClassification()
     }
   }
+
 
   private fun startAudioClassification() {
         if (audioClassifier != null) return;

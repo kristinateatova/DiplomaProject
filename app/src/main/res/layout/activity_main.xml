@@ -24,7 +24,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="731dp"
+        android:layout_height="904dp"
         android:paddingTop="?attr/actionBarSize"
         tools:layout_editor_absoluteY="1dp">
 
@@ -55,19 +55,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/overlap_factor_text_view"
             app:layout_constraintTop_toTopOf="@id/overlap_factor_text_view"
+            app:layout_constraintVertical_bias="0.535"
             app:minTouchTargetSize="10dp"
             app:thumbColor="#08F8D3"
             app:thumbRadius="10dp"
             tools:value="500" />
-
-        <View
-            android:id="@+id/divider_view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="224dp"
-            android:background="@color/gray400"
-            app:layout_constraintTop_toBottomOf="@id/overlap_factor_text_view"
-            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -75,7 +67,7 @@
             android:layout_height="100dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="668dp"
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -84,29 +76,44 @@
             tools:itemCount="2"
             tools:listitem="@layout/item_probability" />
 
+        <View
+            android:id="@+id/divider_view"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/gray400"
+            tools:layout_editor_absoluteX="-7dp"
+            tools:layout_editor_absoluteY="776dp" />
+
         <Button
-            android:id="@+id/myButton"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginStart="145dp"
-            android:layout_marginEnd="144dp"
-            android:layout_marginBottom="11dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="Остановить"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:cornerRadius="100dp"
-            app:layout_constraintBottom_toTopOf="@+id/classification_interval_slider"
+            android:id="@+id/secondbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="436dp"
+            android:text="SecondActivity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:rippleColor="#08F8D3"
-            app:strokeColor="#2F43BC" />
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view"
+            app:rippleColor="#08F8D3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/myButton"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="Остановить"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:cornerRadius="100dp"
+        app:layout_anchor="@+id/constraintLayout"
+        app:layout_anchorGravity="center"
+        app:rippleColor="#08F8D3"
+        app:strokeColor="#2F43BC" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
