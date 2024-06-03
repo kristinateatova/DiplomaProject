@@ -12,6 +12,7 @@ import org.tensorflow.lite.examples.soundclassifier.databinding.ItemProbabilityB
 import org.tensorflow.lite.support.label.Category
 
 internal class ProbabilitiesAdapter : RecyclerView.Adapter<ProbabilitiesAdapter.ViewHolder>() {
+
   var categoryList: List<Category> = emptyList()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,6 +28,9 @@ internal class ProbabilitiesAdapter : RecyclerView.Adapter<ProbabilitiesAdapter.
   }
 
   override fun getItemCount() = categoryList.size
+  fun getFirstItemLabel(): String {
+    return if (categoryList.isNotEmpty()) categoryList[0].label else ""
+  }
 
   class ViewHolder(private val binding: ItemProbabilityBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -36,6 +40,7 @@ internal class ProbabilitiesAdapter : RecyclerView.Adapter<ProbabilitiesAdapter.
         labelTextView.text = label.drop(2)
         progressBar.progressBackgroundTintList = progressColorPairList[position % 3].first
         progressBar.progressTintList = progressColorPairList[position % 3].second
+
 
         val newValue = (score * 100).toInt()
         // анимация плавных скачков графика

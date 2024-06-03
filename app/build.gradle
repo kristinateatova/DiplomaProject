@@ -7,7 +7,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "org.tensorflow.lite.examples.soundclassifier"
+        applicationId 'bird.soundclassifier'
         minSdk 30
 //        targetSdkVersion 30
         versionCode 1

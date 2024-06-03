@@ -9,12 +9,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.HandlerCompat
+import androidx.core.view.isInvisible
 import org.tensorflow.lite.examples.soundclassifier.databinding.ActivityMainBinding
 import org.tensorflow.lite.task.audio.classifier.AudioClassifier
 
@@ -26,9 +28,6 @@ class MainActivity : AppCompatActivity() {
   private var classificationInterval = 500L // как часто классификация будет срабатывать
   private lateinit var handler: Handler
 
-  class BirdDetailsActivity {
-
-  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -44,16 +43,20 @@ class MainActivity : AppCompatActivity() {
         setHasFixedSize(false)
         adapter = probabilitiesAdapter
       }
-      val openBirdDetailsButton = findViewById<Button>(R.id.secondbutton) // Replace with your button ID
+
+      val openBirdDetailsButton = findViewById<Button>(R.id.infobutton) // Replace with your button ID
       openBirdDetailsButton.setOnClickListener {
         val intent = Intent(this@MainActivity, BirdEncyclopedia::class.java)
+        intent.putExtra("DELTA_KEY", probabilitiesAdapter.getFirstItemLabel())
         startActivity(intent)
+
       }
 
       var isRecording = true
+      infobutton.visibility = View.INVISIBLE
       class StatusHolder(var status: Boolean)
       // Создать кнопку
-     // Обработать нажатия кнопки
+      // Обработать нажатия кнопки
       myButton.setOnClickListener {
         // Изменить состояние записи
         isRecording = !isRecording
@@ -66,10 +69,14 @@ class MainActivity : AppCompatActivity() {
           startAudioClassification()
           keepScreenOn(true)
           val statusHolder = StatusHolder(true)
+          infobutton.visibility = View.INVISIBLE
         } else {
           stopAudioClassification()
           keepScreenOn(false)
           val statusHolder = StatusHolder(false)
+          val delta = probabilitiesAdapter.getFirstItemLabel()
+                    infobutton.visibility = View.VISIBLE
+
                   }
       }
 
@@ -86,9 +93,6 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
-
-
-
     val handlerThread = HandlerThread("backgroundThread")
     handlerThread.start()
     handler = HandlerCompat.createAsync(handlerThread.looper)
@@ -101,7 +105,6 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-
   private fun startAudioClassification() {
         if (audioClassifier != null) return;
 
@@ -112,7 +115,6 @@ class MainActivity : AppCompatActivity() {
     // инициализация аудиорекордера
     val record = classifier.createAudioRecord()
     record.startRecording()
-
 
     val run = object : Runnable {
       override fun run() {
@@ -136,20 +138,17 @@ class MainActivity : AppCompatActivity() {
         handler.postDelayed(this, classificationInterval)
       }
     }
-
     // запуск процесса классификации
     handler.post(run)
     audioClassifier = classifier
     audioRecord = record
   }
-
   private fun stopAudioClassification() {
     handler.removeCallbacksAndMessages(null)
     audioRecord?.stop()
     audioRecord = null
     audioClassifier = null
   }
-
   override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
     // Handles "top" resumed event on multi-window environment
     if (isTopResumedActivity && isRecordAudioPermissionGranted()) {
@@ -158,7 +157,6 @@ class MainActivity : AppCompatActivity() {
       stopAudioClassification()
     }
   }
-
   override fun onRequestPermissionsResult(
           requestCode: Int,
           permissions: Array<out String>,
@@ -170,7 +168,7 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "Audio permission granted :)")
         startAudioClassification()
       } else {
-        Log.e(TAG, "Audio permission not granted :(")
+       Log.e(TAG, "Audio permission not granted :(")
       }
     }
   }
