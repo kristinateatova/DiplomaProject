@@ -119,7 +119,6 @@ class MainActivity : AppCompatActivity() {
     val run = object : Runnable {
       override fun run() {
         val startTime = System.currentTimeMillis()
-
         audioTensor.load(record)
         val output = classifier.classify(audioTensor)
         val filteredModelOutput = output[0].categories.filter {
