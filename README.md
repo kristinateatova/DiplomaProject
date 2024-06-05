@@ -8,4 +8,4 @@ an audio event classification model.
 ## Requirements
 
 *   Android Studio 4.2 (installed on a Linux, Mac or Windows machine)
-*   An Android device with Android 6.0+
+*   An Android device with Android 14.0+
